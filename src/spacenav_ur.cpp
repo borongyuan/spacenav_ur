@@ -13,6 +13,12 @@ public:
     iksolver(chain, 0.1, 30)
     {
         iksolver.setLambda(0.1);
+        if (chain.getNrOfJoints() == 6)
+        {
+            Eigen::VectorXd weight_js(6);
+            weight_js << 1, 1, 1, 0.2, 0.2, 0.2;
+            iksolver.setWeightJS(weight_js.asDiagonal());
+        }
 
         joint_names = {"shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint"};
         if (joint_names.size() != chain.getNrOfJoints())
